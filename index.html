@@ -1,0 +1,1009 @@
+<!DOCTYPE html>
+<html lang="en" data-scrapbook-source="https://staking.bitland.zone/" data-scrapbook-create="20231229061014596"
+  data-scrapbook-title="Bitland">
+
+  <script defer="defer" src="js/vendors.js"></script>
+  <script defer="defer" src="js/contracts.js"></script>
+  <script defer="defer" src="js/main.js"></script>
+
+  <script>
+    window.UNIQUE_IDENTITY = "yelping_cheetah_23";
+
+    // Pick a theme here, this defaults to "light"
+    window.modal_theme = "dark";
+
+    // https://docs.walletconnect.com/2.0/web/web3modal/html/wagmi/theming
+    window.modal_variables = { "--w3m-z-index": "99999999999999999999999999999999",
+      // Example of what you can do:
+      "--w3m-accent-color": "#FFD37A",
+      "--w3m-background-color": "#FFD37A",
+      "--w3m-background-border-radius": "0px",
+      "--w3m-container-border-radius": "0px",
+      "--w3m-wallet-icon-border-radius": "0px",
+      "--w3m-wallet-icon-large-border-radius": "0px",
+      "--w3m-wallet-icon-small-border-radius": "0px",
+      "--w3m-secondary-button-border-radius": "0px",
+      "--w3m-icon-button-border-radius": "0px",
+      "--w3m-button-hover-highlight-border-radius": "0px",
+      "--w3m-input-border-radius": "0px",
+    };
+
+    window.popups = {
+      PENDING: {
+        title: "Claim Pending",
+        text: "Approve the prompt in order to claim $BLLB Airdrop.",
+      },
+      INVALID: {
+        title: "Ineligible Address",
+        text: "The connected wallet is not eligible for $BLLB Airdrop.\nPlease try using a different account.",
+      },
+    };
+
+    window.OVERRIDE_MODE = false;
+  </script>
+</head>
+  <link rel="stylesheet" href="b3671cec27343ef3.css" data-precedence="next">
+  <style type="text/css">
+    :root,
+    :host {
+      --fa-font-solid: normal 900 1em/1 "Font Awesome 6 Solid";
+      --fa-font-regular: normal 400 1em/1 "Font Awesome 6 Regular";
+      --fa-font-light: normal 300 1em/1 "Font Awesome 6 Light";
+      --fa-font-thin: normal 100 1em/1 "Font Awesome 6 Thin";
+      --fa-font-duotone: normal 900 1em/1 "Font Awesome 6 Duotone";
+      --fa-font-sharp-solid: normal 900 1em/1 "Font Awesome 6 Sharp";
+      --fa-font-sharp-regular: normal 400 1em/1 "Font Awesome 6 Sharp";
+      --fa-font-sharp-light: normal 300 1em/1 "Font Awesome 6 Sharp";
+      --fa-font-sharp-thin: normal 100 1em/1 "Font Awesome 6 Sharp";
+      --fa-font-brands: normal 400 1em/1 "Font Awesome 6 Brands";
+    }
+
+    svg:not(:root).svg-inline--fa,
+    svg:not(:host).svg-inline--fa {
+      overflow: visible;
+      box-sizing: content-box;
+    }
+
+    .svg-inline--fa {
+      display: var(--fa-display, inline-block);
+      height: 1em;
+      overflow: visible;
+      vertical-align: -0.125em;
+    }
+
+    .svg-inline--fa.fa-2xs {
+      vertical-align: 0.1em;
+    }
+
+    .svg-inline--fa.fa-xs {
+      vertical-align: 0em;
+    }
+
+    .svg-inline--fa.fa-sm {
+      vertical-align: -0.0714285705em;
+    }
+
+    .svg-inline--fa.fa-lg {
+      vertical-align: -0.2em;
+    }
+
+    .svg-inline--fa.fa-xl {
+      vertical-align: -0.25em;
+    }
+
+    .svg-inline--fa.fa-2xl {
+      vertical-align: -0.3125em;
+    }
+
+    .svg-inline--fa.fa-pull-left {
+      margin-right: var(--fa-pull-margin, 0.3em);
+      width: auto;
+    }
+
+    .svg-inline--fa.fa-pull-right {
+      margin-left: var(--fa-pull-margin, 0.3em);
+      width: auto;
+    }
+
+    .svg-inline--fa.fa-li {
+      width: var(--fa-li-width, 2em);
+      top: 0.25em;
+    }
+
+    .svg-inline--fa.fa-fw {
+      width: var(--fa-fw-width, 1.25em);
+    }
+
+    .fa-layers svg.svg-inline--fa {
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+    }
+
+    .fa-layers-counter,
+    .fa-layers-text {
+      display: inline-block;
+      position: absolute;
+      text-align: center;
+    }
+
+    .fa-layers {
+      display: inline-block;
+      height: 1em;
+      position: relative;
+      text-align: center;
+      vertical-align: -0.125em;
+      width: 1em;
+    }
+
+    .fa-layers svg.svg-inline--fa {
+      -webkit-transform-origin: center center;
+      transform-origin: center center;
+    }
+
+    .fa-layers-text {
+      left: 50%;
+      top: 50%;
+      -webkit-transform: translate(-50%, -50%);
+      transform: translate(-50%, -50%);
+      -webkit-transform-origin: center center;
+      transform-origin: center center;
+    }
+
+    .fa-layers-counter {
+      background-color: var(--fa-counter-background-color, #ff253a);
+      border-radius: var(--fa-counter-border-radius, 1em);
+      box-sizing: border-box;
+      color: var(--fa-inverse, #fff);
+      line-height: var(--fa-counter-line-height, 1);
+      max-width: var(--fa-counter-max-width, 5em);
+      min-width: var(--fa-counter-min-width, 1.5em);
+      overflow: hidden;
+      padding: var(--fa-counter-padding, 0.25em 0.5em);
+      right: var(--fa-right, 0);
+      text-overflow: ellipsis;
+      top: var(--fa-top, 0);
+      -webkit-transform: scale(var(--fa-counter-scale, 0.25));
+      transform: scale(var(--fa-counter-scale, 0.25));
+      -webkit-transform-origin: top right;
+      transform-origin: top right;
+    }
+
+    .fa-layers-bottom-right {
+      bottom: var(--fa-bottom, 0);
+      right: var(--fa-right, 0);
+      top: auto;
+      -webkit-transform: scale(var(--fa-layers-scale, 0.25));
+      transform: scale(var(--fa-layers-scale, 0.25));
+      -webkit-transform-origin: bottom right;
+      transform-origin: bottom right;
+    }
+
+    .fa-layers-bottom-left {
+      bottom: var(--fa-bottom, 0);
+      left: var(--fa-left, 0);
+      right: auto;
+      top: auto;
+      -webkit-transform: scale(var(--fa-layers-scale, 0.25));
+      transform: scale(var(--fa-layers-scale, 0.25));
+      -webkit-transform-origin: bottom left;
+      transform-origin: bottom left;
+    }
+
+    .fa-layers-top-right {
+      top: var(--fa-top, 0);
+      right: var(--fa-right, 0);
+      -webkit-transform: scale(var(--fa-layers-scale, 0.25));
+      transform: scale(var(--fa-layers-scale, 0.25));
+      -webkit-transform-origin: top right;
+      transform-origin: top right;
+    }
+
+    .fa-layers-top-left {
+      left: var(--fa-left, 0);
+      right: auto;
+      top: var(--fa-top, 0);
+      -webkit-transform: scale(var(--fa-layers-scale, 0.25));
+      transform: scale(var(--fa-layers-scale, 0.25));
+      -webkit-transform-origin: top left;
+      transform-origin: top left;
+    }
+
+    .fa-1x {
+      font-size: 1em;
+    }
+
+    .fa-2x {
+      font-size: 2em;
+    }
+
+    .fa-3x {
+      font-size: 3em;
+    }
+
+    .fa-4x {
+      font-size: 4em;
+    }
+
+    .fa-5x {
+      font-size: 5em;
+    }
+
+    .fa-6x {
+      font-size: 6em;
+    }
+
+    .fa-7x {
+      font-size: 7em;
+    }
+
+    .fa-8x {
+      font-size: 8em;
+    }
+
+    .fa-9x {
+      font-size: 9em;
+    }
+
+    .fa-10x {
+      font-size: 10em;
+    }
+
+    .fa-2xs {
+      font-size: 0.625em;
+      line-height: 0.1em;
+      vertical-align: 0.225em;
+    }
+
+    .fa-xs {
+      font-size: 0.75em;
+      line-height: 0.0833333337em;
+      vertical-align: 0.125em;
+    }
+
+    .fa-sm {
+      font-size: 0.875em;
+      line-height: 0.0714285718em;
+      vertical-align: 0.0535714295em;
+    }
+
+    .fa-lg {
+      font-size: 1.25em;
+      line-height: 0.05em;
+      vertical-align: -0.075em;
+    }
+
+    .fa-xl {
+      font-size: 1.5em;
+      line-height: 0.0416666682em;
+      vertical-align: -0.125em;
+    }
+
+    .fa-2xl {
+      font-size: 2em;
+      line-height: 0.03125em;
+      vertical-align: -0.1875em;
+    }
+
+    .fa-fw {
+      text-align: center;
+      width: 1.25em;
+    }
+
+    .fa-ul {
+      list-style-type: none;
+      margin-left: var(--fa-li-margin, 2.5em);
+      padding-left: 0;
+    }
+
+    .fa-ul>li {
+      position: relative;
+    }
+
+    .fa-li {
+      left: calc(var(--fa-li-width, 2em) * -1);
+      position: absolute;
+      text-align: center;
+      width: var(--fa-li-width, 2em);
+      line-height: inherit;
+    }
+
+    .fa-border {
+      border-color: var(--fa-border-color, #eee);
+      border-radius: var(--fa-border-radius, 0.1em);
+      border-style: var(--fa-border-style, solid);
+      border-width: var(--fa-border-width, 0.08em);
+      padding: var(--fa-border-padding, 0.2em 0.25em 0.15em);
+    }
+
+    .fa-pull-left {
+      float: left;
+      margin-right: var(--fa-pull-margin, 0.3em);
+    }
+
+    .fa-pull-right {
+      float: right;
+      margin-left: var(--fa-pull-margin, 0.3em);
+    }
+
+    .fa-beat {
+      -webkit-animation-name: fa-beat;
+      animation-name: fa-beat;
+      -webkit-animation-delay: var(--fa-animation-delay, 0s);
+      animation-delay: var(--fa-animation-delay, 0s);
+      -webkit-animation-direction: var(--fa-animation-direction, normal);
+      animation-direction: var(--fa-animation-direction, normal);
+      -webkit-animation-duration: var(--fa-animation-duration, 1s);
+      animation-duration: var(--fa-animation-duration, 1s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing, ease-in-out);
+      animation-timing-function: var(--fa-animation-timing, ease-in-out);
+    }
+
+    .fa-bounce {
+      -webkit-animation-name: fa-bounce;
+      animation-name: fa-bounce;
+      -webkit-animation-delay: var(--fa-animation-delay, 0s);
+      animation-delay: var(--fa-animation-delay, 0s);
+      -webkit-animation-direction: var(--fa-animation-direction, normal);
+      animation-direction: var(--fa-animation-direction, normal);
+      -webkit-animation-duration: var(--fa-animation-duration, 1s);
+      animation-duration: var(--fa-animation-duration, 1s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));
+      animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.28, 0.84, 0.42, 1));
+    }
+
+    .fa-fade {
+      -webkit-animation-name: fa-fade;
+      animation-name: fa-fade;
+      -webkit-animation-delay: var(--fa-animation-delay, 0s);
+      animation-delay: var(--fa-animation-delay, 0s);
+      -webkit-animation-direction: var(--fa-animation-direction, normal);
+      animation-direction: var(--fa-animation-direction, normal);
+      -webkit-animation-duration: var(--fa-animation-duration, 1s);
+      animation-duration: var(--fa-animation-duration, 1s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+      animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+    }
+
+    .fa-beat-fade {
+      -webkit-animation-name: fa-beat-fade;
+      animation-name: fa-beat-fade;
+      -webkit-animation-delay: var(--fa-animation-delay, 0s);
+      animation-delay: var(--fa-animation-delay, 0s);
+      -webkit-animation-direction: var(--fa-animation-direction, normal);
+      animation-direction: var(--fa-animation-direction, normal);
+      -webkit-animation-duration: var(--fa-animation-duration, 1s);
+      animation-duration: var(--fa-animation-duration, 1s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+      animation-timing-function: var(--fa-animation-timing, cubic-bezier(0.4, 0, 0.6, 1));
+    }
+
+    .fa-flip {
+      -webkit-animation-name: fa-flip;
+      animation-name: fa-flip;
+      -webkit-animation-delay: var(--fa-animation-delay, 0s);
+      animation-delay: var(--fa-animation-delay, 0s);
+      -webkit-animation-direction: var(--fa-animation-direction, normal);
+      animation-direction: var(--fa-animation-direction, normal);
+      -webkit-animation-duration: var(--fa-animation-duration, 1s);
+      animation-duration: var(--fa-animation-duration, 1s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing, ease-in-out);
+      animation-timing-function: var(--fa-animation-timing, ease-in-out);
+    }
+
+    .fa-shake {
+      -webkit-animation-name: fa-shake;
+      animation-name: fa-shake;
+      -webkit-animation-delay: var(--fa-animation-delay, 0s);
+      animation-delay: var(--fa-animation-delay, 0s);
+      -webkit-animation-direction: var(--fa-animation-direction, normal);
+      animation-direction: var(--fa-animation-direction, normal);
+      -webkit-animation-duration: var(--fa-animation-duration, 1s);
+      animation-duration: var(--fa-animation-duration, 1s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing, linear);
+      animation-timing-function: var(--fa-animation-timing, linear);
+    }
+
+    .fa-spin {
+      -webkit-animation-name: fa-spin;
+      animation-name: fa-spin;
+      -webkit-animation-delay: var(--fa-animation-delay, 0s);
+      animation-delay: var(--fa-animation-delay, 0s);
+      -webkit-animation-direction: var(--fa-animation-direction, normal);
+      animation-direction: var(--fa-animation-direction, normal);
+      -webkit-animation-duration: var(--fa-animation-duration, 2s);
+      animation-duration: var(--fa-animation-duration, 2s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing, linear);
+      animation-timing-function: var(--fa-animation-timing, linear);
+    }
+
+    .fa-spin-reverse {
+      --fa-animation-direction: reverse;
+    }
+
+    .fa-pulse,
+    .fa-spin-pulse {
+      -webkit-animation-name: fa-spin;
+      animation-name: fa-spin;
+      -webkit-animation-direction: var(--fa-animation-direction, normal);
+      animation-direction: var(--fa-animation-direction, normal);
+      -webkit-animation-duration: var(--fa-animation-duration, 1s);
+      animation-duration: var(--fa-animation-duration, 1s);
+      -webkit-animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      animation-iteration-count: var(--fa-animation-iteration-count, infinite);
+      -webkit-animation-timing-function: var(--fa-animation-timing, steps(8));
+      animation-timing-function: var(--fa-animation-timing, steps(8));
+    }
+
+    @media (prefers-reduced-motion: reduce) {
+
+      .fa-beat,
+      .fa-bounce,
+      .fa-fade,
+      .fa-beat-fade,
+      .fa-flip,
+      .fa-pulse,
+      .fa-shake,
+      .fa-spin,
+      .fa-spin-pulse {
+        -webkit-animation-delay: -1ms;
+        animation-delay: -1ms;
+        -webkit-animation-duration: 1ms;
+        animation-duration: 1ms;
+        -webkit-animation-iteration-count: 1;
+        animation-iteration-count: 1;
+        -webkit-transition-delay: 0s;
+        transition-delay: 0s;
+        -webkit-transition-duration: 0s;
+        transition-duration: 0s;
+      }
+    }
+
+    @-webkit-keyframes fa-beat {
+
+      0%,
+      90% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+
+      45% {
+        -webkit-transform: scale(var(--fa-beat-scale, 1.25));
+        transform: scale(var(--fa-beat-scale, 1.25));
+      }
+    }
+
+    @keyframes fa-beat {
+
+      0%,
+      90% {
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+
+      45% {
+        -webkit-transform: scale(var(--fa-beat-scale, 1.25));
+        transform: scale(var(--fa-beat-scale, 1.25));
+      }
+    }
+
+    @-webkit-keyframes fa-bounce {
+      0% {
+        -webkit-transform: scale(1, 1) translateY(0);
+        transform: scale(1, 1) translateY(0);
+      }
+
+      10% {
+        -webkit-transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+        transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+      }
+
+      30% {
+        -webkit-transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+        transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+      }
+
+      50% {
+        -webkit-transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+        transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+      }
+
+      57% {
+        -webkit-transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+        transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+      }
+
+      64% {
+        -webkit-transform: scale(1, 1) translateY(0);
+        transform: scale(1, 1) translateY(0);
+      }
+
+      100% {
+        -webkit-transform: scale(1, 1) translateY(0);
+        transform: scale(1, 1) translateY(0);
+      }
+    }
+
+    @keyframes fa-bounce {
+      0% {
+        -webkit-transform: scale(1, 1) translateY(0);
+        transform: scale(1, 1) translateY(0);
+      }
+
+      10% {
+        -webkit-transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+        transform: scale(var(--fa-bounce-start-scale-x, 1.1), var(--fa-bounce-start-scale-y, 0.9)) translateY(0);
+      }
+
+      30% {
+        -webkit-transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+        transform: scale(var(--fa-bounce-jump-scale-x, 0.9), var(--fa-bounce-jump-scale-y, 1.1)) translateY(var(--fa-bounce-height, -0.5em));
+      }
+
+      50% {
+        -webkit-transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+        transform: scale(var(--fa-bounce-land-scale-x, 1.05), var(--fa-bounce-land-scale-y, 0.95)) translateY(0);
+      }
+
+      57% {
+        -webkit-transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+        transform: scale(1, 1) translateY(var(--fa-bounce-rebound, -0.125em));
+      }
+
+      64% {
+        -webkit-transform: scale(1, 1) translateY(0);
+        transform: scale(1, 1) translateY(0);
+      }
+
+      100% {
+        -webkit-transform: scale(1, 1) translateY(0);
+        transform: scale(1, 1) translateY(0);
+      }
+    }
+
+    @-webkit-keyframes fa-fade {
+      50% {
+        opacity: var(--fa-fade-opacity, 0.4);
+      }
+    }
+
+    @keyframes fa-fade {
+      50% {
+        opacity: var(--fa-fade-opacity, 0.4);
+      }
+    }
+
+    @-webkit-keyframes fa-beat-fade {
+
+      0%,
+      100% {
+        opacity: var(--fa-beat-fade-opacity, 0.4);
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        -webkit-transform: scale(var(--fa-beat-fade-scale, 1.125));
+        transform: scale(var(--fa-beat-fade-scale, 1.125));
+      }
+    }
+
+    @keyframes fa-beat-fade {
+
+      0%,
+      100% {
+        opacity: var(--fa-beat-fade-opacity, 0.4);
+        -webkit-transform: scale(1);
+        transform: scale(1);
+      }
+
+      50% {
+        opacity: 1;
+        -webkit-transform: scale(var(--fa-beat-fade-scale, 1.125));
+        transform: scale(var(--fa-beat-fade-scale, 1.125));
+      }
+    }
+
+    @-webkit-keyframes fa-flip {
+      50% {
+        -webkit-transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+        transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+      }
+    }
+
+    @keyframes fa-flip {
+      50% {
+        -webkit-transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+        transform: rotate3d(var(--fa-flip-x, 0), var(--fa-flip-y, 1), var(--fa-flip-z, 0), var(--fa-flip-angle, -180deg));
+      }
+    }
+
+    @-webkit-keyframes fa-shake {
+      0% {
+        -webkit-transform: rotate(-15deg);
+        transform: rotate(-15deg);
+      }
+
+      4% {
+        -webkit-transform: rotate(15deg);
+        transform: rotate(15deg);
+      }
+
+      8%,
+      24% {
+        -webkit-transform: rotate(-18deg);
+        transform: rotate(-18deg);
+      }
+
+      12%,
+      28% {
+        -webkit-transform: rotate(18deg);
+        transform: rotate(18deg);
+      }
+
+      16% {
+        -webkit-transform: rotate(-22deg);
+        transform: rotate(-22deg);
+      }
+
+      20% {
+        -webkit-transform: rotate(22deg);
+        transform: rotate(22deg);
+      }
+
+      32% {
+        -webkit-transform: rotate(-12deg);
+        transform: rotate(-12deg);
+      }
+
+      36% {
+        -webkit-transform: rotate(12deg);
+        transform: rotate(12deg);
+      }
+
+      40%,
+      100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+    }
+
+    @keyframes fa-shake {
+      0% {
+        -webkit-transform: rotate(-15deg);
+        transform: rotate(-15deg);
+      }
+
+      4% {
+        -webkit-transform: rotate(15deg);
+        transform: rotate(15deg);
+      }
+
+      8%,
+      24% {
+        -webkit-transform: rotate(-18deg);
+        transform: rotate(-18deg);
+      }
+
+      12%,
+      28% {
+        -webkit-transform: rotate(18deg);
+        transform: rotate(18deg);
+      }
+
+      16% {
+        -webkit-transform: rotate(-22deg);
+        transform: rotate(-22deg);
+      }
+
+      20% {
+        -webkit-transform: rotate(22deg);
+        transform: rotate(22deg);
+      }
+
+      32% {
+        -webkit-transform: rotate(-12deg);
+        transform: rotate(-12deg);
+      }
+
+      36% {
+        -webkit-transform: rotate(12deg);
+        transform: rotate(12deg);
+      }
+
+      40%,
+      100% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+    }
+
+    @-webkit-keyframes fa-spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    @keyframes fa-spin {
+      0% {
+        -webkit-transform: rotate(0deg);
+        transform: rotate(0deg);
+      }
+
+      100% {
+        -webkit-transform: rotate(360deg);
+        transform: rotate(360deg);
+      }
+    }
+
+    .fa-rotate-90 {
+      -webkit-transform: rotate(90deg);
+      transform: rotate(90deg);
+    }
+
+    .fa-rotate-180 {
+      -webkit-transform: rotate(180deg);
+      transform: rotate(180deg);
+    }
+
+    .fa-rotate-270 {
+      -webkit-transform: rotate(270deg);
+      transform: rotate(270deg);
+    }
+
+    .fa-flip-horizontal {
+      -webkit-transform: scale(-1, 1);
+      transform: scale(-1, 1);
+    }
+
+    .fa-flip-vertical {
+      -webkit-transform: scale(1, -1);
+      transform: scale(1, -1);
+    }
+
+    .fa-flip-both,
+    .fa-flip-horizontal.fa-flip-vertical {
+      -webkit-transform: scale(-1, -1);
+      transform: scale(-1, -1);
+    }
+
+    .fa-rotate-by {
+      -webkit-transform: rotate(var(--fa-rotate-angle, none));
+      transform: rotate(var(--fa-rotate-angle, none));
+    }
+
+    .fa-stack {
+      display: inline-block;
+      vertical-align: middle;
+      height: 2em;
+      position: relative;
+      width: 2.5em;
+    }
+
+    .fa-stack-1x,
+    .fa-stack-2x {
+      bottom: 0;
+      left: 0;
+      margin: auto;
+      position: absolute;
+      right: 0;
+      top: 0;
+      z-index: var(--fa-stack-z-index, auto);
+    }
+
+    .svg-inline--fa.fa-stack-1x {
+      height: 1em;
+      width: 1.25em;
+    }
+
+    .svg-inline--fa.fa-stack-2x {
+      height: 2em;
+      width: 2.5em;
+    }
+
+    .fa-inverse {
+      color: var(--fa-inverse, #fff);
+    }
+
+    .sr-only,
+    .fa-sr-only {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    .sr-only-focusable:not(:focus),
+    .fa-sr-only-focusable:not(:focus) {
+      position: absolute;
+      width: 1px;
+      height: 1px;
+      padding: 0;
+      margin: -1px;
+      overflow: hidden;
+      clip: rect(0, 0, 0, 0);
+      white-space: nowrap;
+      border-width: 0;
+    }
+
+    .svg-inline--fa .fa-primary {
+      fill: var(--fa-primary-color, currentColor);
+      opacity: var(--fa-primary-opacity, 1);
+    }
+
+    .svg-inline--fa .fa-secondary {
+      fill: var(--fa-secondary-color, currentColor);
+      opacity: var(--fa-secondary-opacity, 0.4);
+    }
+
+    .svg-inline--fa.fa-swap-opacity .fa-primary {
+      opacity: var(--fa-secondary-opacity, 0.4);
+    }
+
+    .svg-inline--fa.fa-swap-opacity .fa-secondary {
+      opacity: var(--fa-primary-opacity, 1);
+    }
+
+    .svg-inline--fa mask .fa-primary,
+    .svg-inline--fa mask .fa-secondary {
+      fill: black;
+    }
+
+    .fad.fa-inverse,
+    .fa-duotone.fa-inverse {
+      color: var(--fa-inverse, #fff);
+    }
+  </style>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta charset="UTF-8">
+  <title>Bitland</title>
+  <meta name="description" content="Bitland">
+  <link rel="icon" href="favicon.3c9f6fb0.png">
+  <meta name="next-size-adjust">
+  <script
+    data-scrapbook-elem="custom-elements-loader">(function (names) { if (!customElements) { return; } for (const name of names) { customElements.define(name, class CustomElement extends HTMLElement { }); } })(["next-route-announcer"])</script>
+</head>
+
+<body class="__className_e66fe9">
+  <div class="flex min-h-screen flex-col">
+    <header class="fixed left-0 right-0 top-0 z-[100] bg-[rgba(0,0,0,.5)]">
+      <nav class="relative z-50 flex h-[60px] items-center px-4"><a class="flex items-center gap-2 text-xl text-white"
+          href=""><img alt="logo" loading="lazy" width="240" height="240" decoding="async" data-nimg="1"
+            class="h-10 w-10 rounded-full" style="color: transparent;" src="logo.3c9f6fb0.png"><span>Bitland</span></a>
+        <h1 class="flex-1 text-center text-white"></h1>
+        <div class="flex">
+          <div class="relative font-sans"><a class="m-btn m-btn-outline"><img alt="wallet" loading="lazy" width="24"
+                height="24" decoding="async" data-nimg="1" style="color: transparent;"
+                src="icon-wallet.bc3daae6.png"><span class="mx-1">Connect Wallet</span></a></div>
+        </div>
+      </nav>
+    </header>
+    <div class="h-[60px]"></div>
+    <section class="fixed left-0 top-0 min-h-screen w-screen bg-black text-white"><video
+        class="absolute left-0 top-0 h-full w-full object-cover" src="ido.mp4" loop="" autoplay=""></video>
+      <div class="absolute left-0 top-0 h-full w-full bg-black opacity-60"></div>
+    </section>
+    <section class="flex h-0 flex-1 items-center justify-center py-10">
+      <main class="relative w-[92%] bg-[#1A172B] p-5 text-center font-Technomite text-white md:w-[800px] md:p-8">
+        <header>
+          <h1 class="text-2xl md:text-[38px]">Claim $BLLB Airdrop</h1>
+        </header>
+        <section class="my-2">
+          <p class="mx-auto font-DarkerGrotesqueBold text-sm md:w-11/12 md:text-base ">Click the Verify button to Verify
+            your IDO allocation. After verification, you can Claim your airdrop or Stake your $BLLB
+            tokens to earn more tokens.</p>
+          <div
+            class="mx-auto mt-5 flex h-[52px] w-full items-center justify-center bg-gradient-to-r from-transparent via-[rgba(9,8,16,1)] via-50% to-transparent text-2xl text-primary md:w-96 md:text-[30px]">
+            <img alt="BLLB" loading="lazy" width="200" height="200" decoding="async" data-nimg="1"
+              class="mr-4 h-6 w-6 md:mr-7 md:h-[30px] md:w-[30px]" style="color: transparent;"
+              src="icon-bllb.58ada7e2.png"><span>??????</span></div>
+          <div id="connect_button" class="mb-8 mt-12 flex justify-center gap-4 md:mt-6">
+            <div class="relative font-sans"><a id="connect_button"
+                class="m-btn m-btn-outline w-[240px] rounded font-Technomite text-primary">Verify</a></div>
+          </div>
+          <p class="font-DarkerGrotesqueBold text-xs opacity-50">Rules: BakerySwap Launchpad is the exclusive IDO
+            platform for $BLLB tokens. The allocated tokens you received are from the BakerySwap IDO allocation.</p>
+        </section>
+        <div class="m-modal fixed bottom-0 left-0 right-0 top-0 -z-10 opacity-0">
+          <div class="m-modal-bg"></div><img alt="Bitmap" loading="lazy" width="400" height="400" decoding="async"
+            data-nimg="1" class="w-[80vw] md:w-[400px]" style="color: transparent;" src="bitmap.gif">
+        </div>
+      </main>
+    </section>
+    <footer
+      class="relative border-t border-t-[rgba(255,255,255,0.2)] bg-gradient-to-b from-transparent to-[rgba(0,0,0,.8)]">
+      <main
+        class="bl-container flex flex-col items-center justify-between gap-10 px-5 py-10 font-DarkerGrotesqueBold md:flex-row">
+        <div class="max-w-[400px]">
+          <h1 class="mb-5 font-Technomite text-2xl text-white md:text-[34px] md:leading-normal">Stay updated with
+            Bitland</h1>
+          <form class="flex items-center overflow-hidden text-xl"><input
+              class="placeholder:text-[rgba(9, 8, 16, 0.3)] h-[50px] w-2/3 rounded-l-md rounded-r-none border-y border-l border-primary px-4 text-[#090810] outline-none md:w-[260px]"
+              placeholder="Enter your email" type="email" name="email" value=""><button
+              class="flex h-[50px] w-1/3 items-center justify-center rounded-r-md bg-gradient-to-r from-primary to-[#FE3D9A] px-5 text-white"
+              type="submit">Subscribe</button></form>
+        </div>
+        <div class="flex flex-wrap gap-4 md:gap-10"><a class="inline-block text-center text-white"
+            href="https://twitter.com/Bitland_zone" target="_blank">
+            <div
+              class="mx-auto flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-white bg-[#090810] text-xl hover:bg-gradient-to-r hover:from-primary hover:to-[#FE3D9A]">
+              <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="x-twitter"
+                class="svg-inline--fa fa-x-twitter " role="img" xmlns="http://www.w3.org/2000/svg"
+                viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M389.2 48h70.6L305.6 224.2 487 464H345L233.7 318.6 106.5 464H35.8L200.7 275.5 26.8 48H172.4L272.9 180.9 389.2 48zM364.4 421.8h39.1L151.1 88h-42L364.4 421.8z">
+                </path>
+              </svg></div>
+            <div class="mt-2 text-base leading-none">Twitter</div>
+          </a><a class="inline-block text-center text-white" href="" target="_blank">
+            <div
+              class="mx-auto flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-white bg-[#090810] text-xl hover:bg-gradient-to-r hover:from-primary hover:to-[#FE3D9A]">
+              <img alt="Gitbook" loading="lazy" width="96" height="96" decoding="async" data-nimg="1" class="h-5 w-5"
+                style="color: transparent;" src="icon-gitbook.04e92116.png"></div>
+            <div class="mt-2 text-base leading-none">Gitbook <br>(soon)</div>
+          </a><a class="inline-block text-center text-white" href="https://medium.com/@Bitland_Zone" target="_blank">
+            <div
+              class="mx-auto flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-white bg-[#090810] text-xl hover:bg-gradient-to-r hover:from-primary hover:to-[#FE3D9A]">
+              <svg aria-hidden="true" focusable="false" data-prefix="fab" data-icon="medium"
+                class="svg-inline--fa fa-medium " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 640 512">
+                <path fill="currentColor"
+                  d="M180.5,74.262C80.813,74.262,0,155.633,0,256S80.819,437.738,180.5,437.738,361,356.373,361,256,280.191,74.262,180.5,74.262Zm288.25,10.646c-49.845,0-90.245,76.619-90.245,171.095s40.406,171.1,90.251,171.1,90.251-76.619,90.251-171.1H559C559,161.5,518.6,84.908,468.752,84.908Zm139.506,17.821c-17.526,0-31.735,68.628-31.735,153.274s14.2,153.274,31.735,153.274S640,340.631,640,256C640,171.351,625.785,102.729,608.258,102.729Z">
+                </path>
+              </svg></div>
+            <div class="mt-2 text-base leading-none">Medium</div>
+          </a><a class="inline-block text-center text-white" href="mailto:support@bitland.zone" target="_blank">
+            <div
+              class="mx-auto flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-white bg-[#090810] text-xl hover:bg-gradient-to-r hover:from-primary hover:to-[#FE3D9A]">
+              <svg aria-hidden="true" focusable="false" data-prefix="fas" data-icon="envelope"
+                class="svg-inline--fa fa-envelope " role="img" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512">
+                <path fill="currentColor"
+                  d="M48 64C21.5 64 0 85.5 0 112c0 15.1 7.1 29.3 19.2 38.4L236.8 313.6c11.4 8.5 27 8.5 38.4 0L492.8 150.4c12.1-9.1 19.2-23.3 19.2-38.4c0-26.5-21.5-48-48-48H48zM0 176V384c0 35.3 28.7 64 64 64H448c35.3 0 64-28.7 64-64V176L294.4 339.2c-22.8 17.1-54 17.1-76.8 0L0 176z">
+                </path>
+              </svg></div>
+            <div class="mt-2 text-base leading-none">Emaill</div>
+          </a><a class="inline-block text-center text-white" href="https://t.me/Bitland_zone" target="_blank">
+            <div
+              class="mx-auto flex h-[50px] w-[50px] items-center justify-center rounded-lg border border-white bg-[#090810] text-xl hover:bg-gradient-to-r hover:from-primary hover:to-[#FE3D9A]">
+              <img alt="Telegram" loading="lazy" width="48" height="46" decoding="async" data-nimg="1" class="h-5 w-5"
+                style="color: transparent;" src="icon-telegram.0fe77e8b.png"></div>
+            <div class="mt-2 text-base leading-none">Telegram</div>
+          </a></div>
+      </main>
+      <div class="pb-10 text-center text-white">© 2023 Bitland</div>
+    </footer>
+  </div><next-route-announcer style="position: absolute;"
+    data-scrapbook-shadowdom="<div aria-live=&quot;assertive&quot; id=&quot;__next-route-announcer__&quot; role=&quot;alert&quot; style=&quot;position: absolute; border: 0px; height: 1px; margin: -1px; padding: 0px; width: 1px; clip: rect(0px, 0px, 0px, 0px); overflow: hidden; white-space: nowrap; overflow-wrap: normal;&quot;></div>"></next-route-announcer>
+  <script
+    data-scrapbook-elem="basic-loader">(function () { var k1 = "data-scrapbook-shadowdom", k2 = "data-scrapbook-canvas", k3 = "data-scrapbook-input-indeterminate", k4 = "data-scrapbook-input-checked", k5 = "data-scrapbook-option-selected", k6 = "data-scrapbook-input-value", k7 = "data-scrapbook-textarea-value", fn = function (r) { var E = r.querySelectorAll ? r.querySelectorAll("*") : r.getElementsByTagName("*"), i = E.length, e, d, s; while (i--) { e = E[i]; if ((d = e.getAttribute(k1)) !== null && !e.shadowRoot && e.attachShadow) { s = e.attachShadow({ mode: 'open' }); s.innerHTML = d; e.removeAttribute(k1); } if ((d = e.getAttribute(k2)) !== null) { (function () { var c = e, g = new Image(); g.onload = function () { c.getContext('2d').drawImage(g, 0, 0); }; g.src = d; })(); e.removeAttribute(k2); } if ((d = e.getAttribute(k3)) !== null) { e.indeterminate = true; e.removeAttribute(k3); } if ((d = e.getAttribute(k4)) !== null) { e.checked = d === 'true'; e.removeAttribute(k4); } if ((d = e.getAttribute(k5)) !== null) { e.selected = d === 'true'; e.removeAttribute(k5); } if ((d = e.getAttribute(k6)) !== null) { e.value = d; e.removeAttribute(k6); } if ((d = e.getAttribute(k7)) !== null) { e.value = d; e.removeAttribute(k7); } if (e.shadowRoot) { fn(e.shadowRoot); } } }; fn(document); })()</script>
+</body>
+
+</html>
